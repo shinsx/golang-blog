@@ -19,13 +19,9 @@ func NewUserUsecase(ur repository.IUserRepository) IUserUsecase {
 
 func (uu *userUsecase) Login(user model.User) (*model.User, error) {
 	storedUser := model.User{}
-	getUser, err := uu.ur.GetUserByEmail(&storedUser, user.Email);
+	getUser, err := uu.ur.GetUserByEmail(&storedUser, user.Email)
 	if err != nil {
 		return nil, err
 	}
-	// if user, err := uu.ur.GetUserByEmail(&storedUser, user.Email); err != nil {
-	// 	return "", err
-	// }
 	return getUser, nil
 }
-
