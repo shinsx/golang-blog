@@ -10,7 +10,7 @@ import (
 )
 
 type IUserController interface {
-	LogIn(c echo.Context) (*model.User, error)
+	LogIn(c echo.Context) error
 }
 
 type userController struct {
@@ -21,14 +21,14 @@ func NewUserController(uu usecase.IUserUsecase) IUserController {
 	return &userController{uu}
 }
 
-func (uc *userController) LogIn(c echo.Context) (*model.User, error) {
+func (uc *userController) LogIn(c echo.Context) error {
 	user := model.User{}
 	if err := c.Bind(&user); err != nil {
-		return nil, c.JSON(http.StatusBadRequest, err.Error())
+		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 	getUser, err := uc.uu.Login(user)
 	if err != nil {
-		return nil, c.JSON(http.StatusInternalServerError, err.Error())
+		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	return getUser, c.NoContent(http.StatusOK)
+	return c.JSON(http.StatusOK, getUser)
 }
