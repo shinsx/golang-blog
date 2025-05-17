@@ -3,6 +3,8 @@ package usecase
 import (
 	"github.com/shinsx/golang-blog/model"
 	"github.com/shinsx/golang-blog/repository"
+
+	"errors"
 )
 
 type IUserUsecase interface {
@@ -22,6 +24,9 @@ func (uu *userUsecase) Login(user model.User) (*model.User, error) {
 	getUser, err := uu.ur.GetUserByEmail(&storedUser, user.Email)
 	if err != nil {
 		return nil, err
+	}
+	if storedUser.Password != user.Password {
+		return nil, errors.New("password is incorrect")
 	}
 	return getUser, nil
 }
