@@ -14,6 +14,7 @@ func NewRouter(uc controller.IUserController) *echo.Echo {
 	e := echo.New()
 	e.GET("/", Hello)
 	e.POST("/login", uc.LogIn)
+	e.POST("/signup", uc.SignUp)
 	t := e.Group("/articles")
 	t.Use(echojwt.WithConfig(echojwt.Config{
 		SigningKey:  []byte(os.Getenv("SECRET")),
@@ -24,9 +25,9 @@ func NewRouter(uc controller.IUserController) *echo.Echo {
 }
 
 func Hello(c echo.Context) error {
-  return c.String(http.StatusOK, "Hello, World!")
+	return c.String(http.StatusOK, "Hello, World!")
 }
 
 func LogInCheck(c echo.Context) error {
-  return c.String(http.StatusOK, "ログインしてる")
+	return c.String(http.StatusOK, "ログインしてる")
 }
