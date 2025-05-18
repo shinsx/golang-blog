@@ -3,6 +3,7 @@ module github.com/shinsx/golang-blog
 go 1.24.3
 
 require (
+	github.com/golang-jwt/jwt/v4 v4.5.2
 	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo/v4 v4.13.3
 	gorm.io/driver/mysql v1.5.7
